@@ -2,3 +2,6 @@ signal_project_guide.md
 plots
 models
 output
+raw
+__pycache__
+exploration.ipynb
