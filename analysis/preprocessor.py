@@ -1,3 +1,6 @@
+from sklearn.preprocessing import OneHotEncoder
+import pandas as pd
+
 def get_feature_types(df):
     no_label_columns = df.drop(columns=['label', 'attack_category'])
 
@@ -8,5 +11,11 @@ def get_feature_types(df):
     categorical_features = categorical_features_df.columns.tolist()
 
     label_col = "attack_category"
-    
+
     return (numeric_features, categorical_features ,label_col)
+
+def encode_categoricals(train_df, test_df, categorical_features):
+    encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+    encoded_train = encoder.fit_transform(train_df[categorical_features])
+    encoded_test = encoder.transform(test_df[categorical_features])
+    return (encoder, encoded_train, encoded_test)
