@@ -94,3 +94,8 @@ def load_data():
     train_df = train_df.drop(columns=['difficulty_score'])
     test_df = test_df.drop(columns=['difficulty_score'])
     return (train_df, test_df)
+
+def map_labels(df): 
+    attack_cat = df["label"].map(attack_categories).fillna("unknown")
+    df["attack_category"] = attack_cat
+    return df
