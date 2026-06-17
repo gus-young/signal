@@ -41,10 +41,56 @@ col_names = [
     'dst_host_serror_rate',
     'dst_host_srv_serror_rate',
     'dst_host_rerror_rate',
-    'dst_host_srv_rerror_rate'
+    'dst_host_srv_rerror_rate',
+    'label',
+    'difficulty_score'
 ]
+
+attack_categories = {
+    "normal":"normal",
+    "neptune":"DoS",
+    "back":"DoS",
+    "land":"DoS",
+    "pod":"DoS",
+    "smurf":"DoS",
+    "teardrop":"DoS",
+    "apache2":"DoS",
+    "udpstorm":"DoS",
+    "processtable":"DoS",
+    "worm":"DoS",
+    "satan":"Probe",
+    "ipsweep":"Probe",
+    "nmap":"Probe",
+    "portsweep":"Probe",
+    "mscan":"Probe",
+    "saint":"Probe",
+    "guess_passwd":"R2L",
+    "ftp_write":"R2L",
+    "imap":"R2L",
+    "phf":"R2L",
+    "multihop":"R2L",
+    "warezmaster":"R2L",
+    "warezclient":"R2L",
+    "spy":"R2L",
+    "xlock":"R2L",
+    "xsnoop":"R2L",
+    "snmpguess":"R2L",
+    "snmpgetattack":"R2L",
+    "httptunnel":"R2L",
+    "sendmail":"R2L",
+    "named":"R2L",
+    "buffer_overflow":"U2R",
+    "loadmodule":"U2R",
+    "perl":"U2R",
+    "rootkit":"U2R",
+    "sqlattack":"U2R",
+    "xterm":"U2R",
+    "ps":"U2R",
+}
 
 def load_data():
     train_df = pd.read_csv('data/raw/KDDTrain+.txt', header=None, names=col_names)
     test_df = pd.read_csv('data/raw/KDDTest+.txt', header=None, names=col_names)
+    train_df = train_df.drop(columns=['difficulty_score'])
+    test_df = test_df.drop(columns=['difficulty_score'])
     return (train_df, test_df)
