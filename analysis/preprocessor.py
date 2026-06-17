@@ -1,4 +1,4 @@
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import pandas as pd
 
 def get_feature_types(df):
@@ -19,3 +19,9 @@ def encode_categoricals(train_df, test_df, categorical_features):
     encoded_train = encoder.fit_transform(train_df[categorical_features])
     encoded_test = encoder.transform(test_df[categorical_features])
     return (encoder, encoded_train, encoded_test)
+
+def scale_features(train_df, test_df, numeric_features):
+    scaler = StandardScaler()
+    scaled_train = scaler.fit_transform(train_df[numeric_features])
+    scaled_test = scaler.transform(test_df[numeric_features])
+    return (scaler, scaled_train, scaled_test)
