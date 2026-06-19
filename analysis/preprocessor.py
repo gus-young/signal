@@ -1,5 +1,6 @@
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import pandas as pd
+import numpy as np
 
 def get_feature_types(df):
     no_label_columns = df.drop(columns=['label', 'attack_category'])
@@ -25,3 +26,7 @@ def scale_features(train_df, test_df, numeric_features):
     scaled_train = scaler.fit_transform(train_df[numeric_features])
     scaled_test = scaler.transform(test_df[numeric_features])
     return (scaler, scaled_train, scaled_test)
+
+def build_feature_matrix(scaled_numeric, encoded_categorical):
+    X = np.hstack((scaled_numeric, encoded_categorical))
+    return X
