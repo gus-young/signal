@@ -55,3 +55,5 @@ def save_preprocessed():
 
     np.save('output/X_test.npy', X_test)
     np.save('output/y_test.npy', y_test)
+
+    print("Preprocessing complete and saved to /output folder")
