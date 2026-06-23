@@ -11,23 +11,23 @@ y_train = np.load('output/y_train.npy', allow_pickle=True)
 X_test = np.load('output/X_test.npy')
 y_test = np.load('output/y_test.npy', allow_pickle=True)
 
+# Reduce Dimensions of data 
 x_pca = reduce_dimensions(X_train, X_test)
-print(run_kmeans(x_pca[1]))
 
-x = []
-y = []
+def evaluate_cluster_plot(x_pca, n=10):
+    x = []
+    y = []
 
-for num in range (2,11):
-    kmeans_run = run_kmeans(x_pca[1], k=num)
-    clusters = evaluate_clusters (x_pca[1], kmeans_run)
-    x.append(num)
-    y.append(clusters[0])
+    for num in range (2, n+1):
+        kmeans_run = run_kmeans(x_pca[1], k=num)
+        clusters = evaluate_clusters (x_pca[1], kmeans_run)
+        x.append(num)
+        y.append(clusters[0])
 
-print (x)
-print (y)
+    plt.plot(x, y)
+    plt.xlabel("k value")
+    plt.ylabel("Inertia Value")
+    plt.title ("k vs Inertia")
+    plt.savefig("plots/elbow.png")
 
-plt.plot(x, y)
-plt.xlabel = "k value"
-plt.ylabel = "Inertia Value"
-plt.title = "k vs Inertia"
-plt.savefig("plots/elbow.png")
+evaluate_cluster_plot(x_pca, 30)
