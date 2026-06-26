@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 from tqdm import tqdm
+from sklearn.preprocessing import LabelEncoder
 
 def reduce_dimensions(X_train, X_test, n_components=20):
     pca = PCA(n_components)
@@ -51,11 +52,19 @@ def evaluate_cluster_plot(x_pca, n=5):
     print(f"Second Deriv: {elbow}")
     print ("Silhouette Score:", clusters[1])
 
-def plot_2d(x_pca, X_train):
+def plot_2d(x_pca, X_train, y_train):
     kmeans_run = run_kmeans(x_pca[0], 5)
     x_pca2d = PCA(n_components=2)
     X_2d = x_pca2d.fit_transform(X_train)
     x = X_2d[:, 0]
     y = X_2d[:, 1]
     plt.scatter(x, y, c=kmeans_run.labels_, cmap="tab10", alpha=0.3, s=1)
+    plt.title("Trained Clusters")
     plt.savefig("plots/clusters_kmeans.png")
+
+    le = LabelEncoder()
+    labels = y_train
+    encoded_labels = le.fit_transform(labels)
+    plt.scatter(x, y, c=encoded_labels, cmap="tab10", alpha=0.3, s=1)
+    plt.title("Actual Groups")
+    plt.savefig("plots/actual_groups.png")
