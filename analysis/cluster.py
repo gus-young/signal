@@ -4,6 +4,7 @@ from sklearn.metrics import silhouette_score
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
+import pandas as pd
 from tqdm import tqdm
 from sklearn.preprocessing import LabelEncoder
 
@@ -68,3 +69,13 @@ def plot_2d(x_pca, X_train, y_train):
     plt.scatter(x, y, c=encoded_labels, cmap="tab10", alpha=0.3, s=1)
     plt.title("Actual Groups")
     plt.savefig("plots/actual_groups.png")
+
+def cluster_report(x_pca, y_train):
+    kmeans_run = run_kmeans(x_pca[0], 5)
+    cluster_labels = kmeans_run.labels_
+    cluster_df = pd.DataFrame({
+        "cluster":cluster_labels, 
+        "true_label": y_train,
+        })
+    output = cluster_df.groupby("cluster")["true_label"].value_counts()
+    print(output)
